@@ -4,7 +4,7 @@
 
 	export let text: string;
 	export let color: string;
-	export let layerClass: string;
+	export let layer: number;
 	export let children: GridItemType[];
 
 	let active: boolean = false;
@@ -22,8 +22,8 @@
 </script>
 
 {#if hovered}
-	<div class={layerClass}>
-		{#each children as child}
+	<div class={`grid flex-1 h-full w-full ${layer % 2 ? 'grid-cols-2' : 'grid-rows-2'}`}>
+		{#each children as child (child)}
 			<svelte:self {...child} />
 		{/each}
 	</div>
