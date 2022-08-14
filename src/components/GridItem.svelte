@@ -9,20 +9,21 @@
 
 	let active: boolean = false;
 	let hovered: boolean = false;
+	let noMoreChildren: boolean = children.length === 0 ? false : true;
 
 	const hover = () => {
-		if (active && children.length !== 0) hovered = true;
+		if (active && noMoreChildren) hovered = true;
 	};
 
 	onMount(() => {
 		setTimeout(() => {
 			active = true;
-		}, 1000);
+		}, 500);
 	});
 </script>
 
 {#if hovered}
-	<div class={`grid flex-1 h-full w-full ${layer % 2 ? 'grid-cols-2' : 'grid-rows-2'}`}>
+	<div class={`grid flex-1 h-full w-full ${layer % 2 ? 'grid-cols-2' : 'grid-rows-2'} `}>
 		{#each children as child (child)}
 			<svelte:self {...child} />
 		{/each}
@@ -30,7 +31,11 @@
 {/if}
 
 {#if !hovered}
-	<div class={color} on:mouseover={hover} on:focus={hover}>
+	<div
+		class={`${color} transition ease-in-out delay-50 hover:scale-105`}
+		on:mouseover={hover}
+		on:focus={hover}
+	>
 		{text}
 	</div>
 {/if}
